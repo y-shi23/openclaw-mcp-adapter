@@ -55,5 +55,69 @@
         "description": "Prefix tool names with server name"
       }
     }
+  },
+  "uiHints": {
+    "servers": {
+      "label": "MCP Servers",
+      "description": "Configure MCP servers to connect to. Each server will expose its tools as OpenClaw agent tools.",
+      "arrayItemLabel": "Server",
+      "itemUiHints": {
+        "name": {
+          "label": "Server Name",
+          "placeholder": "e.g., android-vlm, filesystem",
+          "description": "A unique identifier for this server. This name will be used as a prefix for all tools from this server."
+        },
+        "transport": {
+          "label": "Transport Type",
+          "description": "How to connect to this MCP server",
+          "options": [
+            {
+              "value": "stdio",
+              "label": "Standard I/O",
+              "hint": "Spawn a child process and communicate via stdin/stdout"
+            },
+            {
+              "value": "http",
+              "label": "HTTP",
+              "hint": "Connect to an HTTP endpoint that exposes MCP protocol"
+            }
+          ]
+        },
+        "command": {
+          "label": "Command",
+          "placeholder": "npx",
+          "description": "The command to spawn (for stdio transport)",
+          "dependsOn": { "transport": "stdio" }
+        },
+        "args": {
+          "label": "Arguments",
+          "description": "Command arguments (for stdio transport)",
+          "dependsOn": { "transport": "stdio" }
+        },
+        "env": {
+          "label": "Environment Variables",
+          "description": "Key-value pairs of environment variables to pass to the command (for stdio transport)",
+          "dependsOn": { "transport": "stdio" }
+        },
+        "url": {
+          "label": "Server URL",
+          "placeholder": "http://localhost:3000/mcp",
+          "description": "The MCP server endpoint URL (for http transport)",
+          "dependsOn": { "transport": "http" }
+        },
+        "headers": {
+          "label": "Request Headers",
+          "description": "HTTP headers to include in requests (for http transport). Common headers: Authorization, Content-Type",
+          "dependsOn": { "transport": "http" },
+          "objectKeyLabel": "Header Name",
+          "objectValueLabel": "Header Value",
+          "objectValuePlaceholder": "Value"
+        }
+      }
+    },
+    "toolPrefix": {
+      "label": "Prefix Tool Names",
+      "description": "If enabled, tool names will include the server name as a prefix (e.g., 'android-vlm_task' instead of 'task'). Recommended to avoid conflicts."
+    }
   }
 }
